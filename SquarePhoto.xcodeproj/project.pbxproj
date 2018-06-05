@@ -12,6 +12,7 @@
 		EF4A5D5020C5A05400DBB22A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF4A5D4E20C5A05400DBB22A /* Main.storyboard */; };
 		EF4A5D5220C5A05500DBB22A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EF4A5D5120C5A05500DBB22A /* Assets.xcassets */; };
 		EF4A5D5520C5A05500DBB22A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF4A5D5320C5A05500DBB22A /* LaunchScreen.storyboard */; };
+		EF4A5D5D20C5A2BE00DBB22A /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4A5D5C20C5A2BE00DBB22A /* UIImage+.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		EF4A5D5120C5A05500DBB22A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EF4A5D5420C5A05500DBB22A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EF4A5D5620C5A05500DBB22A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EF4A5D5C20C5A2BE00DBB22A /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +58,7 @@
 			children = (
 				EF4A5D4A20C5A05300DBB22A /* AppDelegate.swift */,
 				EF4A5D4C20C5A05400DBB22A /* ViewController.swift */,
+				EF4A5D5C20C5A2BE00DBB22A /* UIImage+.swift */,
 				EF4A5D4E20C5A05400DBB22A /* Main.storyboard */,
 				EF4A5D5120C5A05500DBB22A /* Assets.xcassets */,
 				EF4A5D5320C5A05500DBB22A /* LaunchScreen.storyboard */,
@@ -135,6 +138,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF4A5D5D20C5A2BE00DBB22A /* UIImage+.swift in Sources */,
 				EF4A5D4D20C5A05400DBB22A /* ViewController.swift in Sources */,
 				EF4A5D4B20C5A05300DBB22A /* AppDelegate.swift in Sources */,
 			);
