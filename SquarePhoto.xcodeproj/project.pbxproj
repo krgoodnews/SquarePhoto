@@ -13,6 +13,7 @@
 		EF4A5D5220C5A05500DBB22A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EF4A5D5120C5A05500DBB22A /* Assets.xcassets */; };
 		EF4A5D5520C5A05500DBB22A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF4A5D5320C5A05500DBB22A /* LaunchScreen.storyboard */; };
 		EF4A5D5D20C5A2BE00DBB22A /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4A5D5C20C5A2BE00DBB22A /* UIImage+.swift */; };
+		EF4A5D6120C6272E00DBB22A /* ImagePicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF4A5D6020C6272E00DBB22A /* ImagePicker.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		EF4A5D5420C5A05500DBB22A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EF4A5D5620C5A05500DBB22A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EF4A5D5C20C5A2BE00DBB22A /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
+		EF4A5D6020C6272E00DBB22A /* ImagePicker.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImagePicker.framework; path = Carthage/Build/iOS/ImagePicker.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +33,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF4A5D6120C6272E00DBB22A /* ImagePicker.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -42,6 +45,7 @@
 			children = (
 				EF4A5D4920C5A05300DBB22A /* SquarePhoto */,
 				EF4A5D4820C5A05300DBB22A /* Products */,
+				EF4A5D5F20C6272D00DBB22A /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -67,6 +71,14 @@
 			path = SquarePhoto;
 			sourceTree = "<group>";
 		};
+		EF4A5D5F20C6272D00DBB22A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				EF4A5D6020C6272E00DBB22A /* ImagePicker.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -77,6 +89,7 @@
 				EF4A5D4320C5A05300DBB22A /* Sources */,
 				EF4A5D4420C5A05300DBB22A /* Frameworks */,
 				EF4A5D4520C5A05300DBB22A /* Resources */,
+				EF4A5D5E20C6270200DBB22A /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -132,6 +145,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		EF4A5D5E20C6270200DBB22A /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/ImagePicker.framework",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		EF4A5D4320C5A05300DBB22A /* Sources */ = {
@@ -286,6 +316,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 827YX997NH;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = SquarePhoto/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -304,6 +338,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 827YX997NH;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = SquarePhoto/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

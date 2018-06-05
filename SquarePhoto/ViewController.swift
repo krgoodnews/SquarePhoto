@@ -7,8 +7,11 @@
 //
 
 import UIKit
+import ImagePicker
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, ImagePickerDelegate {
+	
+	
 
 	@IBOutlet weak var imgView: UIImageView!
 	@IBOutlet weak var imgView01: UIImageView!
@@ -22,10 +25,10 @@ class ViewController: UIViewController {
 		// Dispose of any resources that can be recreated.
 	}
 
-	@IBAction func didTapSelectPhoto(_ sender: UIButton) {
+	fileprivate func saveSquaredPhoto() {
 		var img = #imageLiteral(resourceName: "sample01")
 		print("originalSize:", img.size)
-//		img = img.resizeImage(200, opaque: true)
+		//		img = img.resizeImage(200, opaque: true)
 		imgView.image = img
 		
 		img = img.squareImage()
@@ -34,17 +37,27 @@ class ViewController: UIViewController {
 		
 		// save file
 		
-//		if let data = UIImagePNGRepresentation(img) {
-//			let filename = getDocumentsDirectory().appendingPathComponent("copy.png")
-//
-//			do {
-//				print(filename)
-//				try data.write(to: filename)
-//			} catch let err {
-//				print("writeErr:", err)
-//			}
-//		}
+		//		if let data = UIImagePNGRepresentation(img) {
+		//			let filename = getDocumentsDirectory().appendingPathComponent("copy.png")
+		//
+		//			do {
+		//				print(filename)
+		//				try data.write(to: filename)
+		//			} catch let err {
+		//				print("writeErr:", err)
+		//			}
+		//		}
 		UIImageWriteToSavedPhotosAlbum(img, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
+	}
+	
+	@IBAction func didTapSelectPhoto(_ sender: UIButton) {
+		
+		// present imagePickerVC
+		
+		let imagePickerController = ImagePickerController()
+//		let pickerVC = ImagePickerController(configuration: <#T##Configuration#>)
+		imagePickerController.delegate = self
+		present(imagePickerController, animated: true, completion: nil)
 
 	}
 	@objc func image(_ image: UIImage, didFinishSavingWithError error: NSError?, contextInfo: UnsafeRawPointer) {
@@ -61,7 +74,17 @@ class ViewController: UIViewController {
 	}
 	
 	
+	func wrapperDidPress(_ imagePicker: ImagePickerController, images: [UIImage]) {
+		print("wrapperDidPress")
+	}
 	
+	func doneButtonDidPress(_ imagePicker: ImagePickerController, images: [UIImage]) {
+		print("doneButtonDidPress")
+	}
+	
+	func cancelButtonDidPress(_ imagePicker: ImagePickerController) {
+		print("cancelButtonDidPress")
+	}
 	
 }
 
