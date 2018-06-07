@@ -25,29 +25,20 @@ class ViewController: UIViewController, ImagePickerDelegate {
 		// Dispose of any resources that can be recreated.
 	}
 
-	fileprivate func saveSquaredPhoto() {
-		var img = #imageLiteral(resourceName: "sample01")
+	fileprivate func saveSquaredPhoto(_ img: UIImage) {
+		var img = img
 		print("originalSize:", img.size)
 		//		img = img.resizeImage(200, opaque: true)
-		imgView.image = img
+		
 		
 		img = img.squareImage()
 		print("squareSize:", img.size)
-		imgView01.image = img
 		
-		// save file
+//		DispatchQueue.main.async {
+		DispatchQueue.global(qos: .background).async {
+			UIImageWriteToSavedPhotosAlbum(img, self, #selector(self.image(_:didFinishSavingWithError:contextInfo:)), nil)
+		}
 		
-		//		if let data = UIImagePNGRepresentation(img) {
-		//			let filename = getDocumentsDirectory().appendingPathComponent("copy.png")
-		//
-		//			do {
-		//				print(filename)
-		//				try data.write(to: filename)
-		//			} catch let err {
-		//				print("writeErr:", err)
-		//			}
-		//		}
-		UIImageWriteToSavedPhotosAlbum(img, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
 	}
 	
 	@IBAction func didTapSelectPhoto(_ sender: UIButton) {
@@ -55,7 +46,6 @@ class ViewController: UIViewController, ImagePickerDelegate {
 		// present imagePickerVC
 		
 		let imagePickerController = ImagePickerController()
-//		let pickerVC = ImagePickerController(configuration: <#T##Configuration#>)
 		imagePickerController.delegate = self
 		present(imagePickerController, animated: true, completion: nil)
 
@@ -80,10 +70,33 @@ class ViewController: UIViewController, ImagePickerDelegate {
 	
 	func doneButtonDidPress(_ imagePicker: ImagePickerController, images: [UIImage]) {
 		print("doneButtonDidPress")
+		imagePicker.dismiss(animated: true, completion: {
+			self.alertMakeSquare(images: images)
+		})
+
+		
+	}
+	
+	private func alertMakeSquare(images: [UIImage]) {
+		let alert = UIAlertController(title: "선택하신 \(images.count)장의 사진을 정사각형으로 변환하시겠습니까?", message: nil, preferredStyle: .alert)
+		
+		let makeAction = UIAlertAction(title: "Sure", style: .destructive) { (_) in
+			for img in images {
+				self.saveSquaredPhoto(img)
+			}
+		}
+		
+		let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+		
+		alert.addAction(makeAction)
+		alert.addAction(cancelAction)
+		
+		present(alert, animated: true, completion: nil)
 	}
 	
 	func cancelButtonDidPress(_ imagePicker: ImagePickerController) {
 		print("cancelButtonDidPress")
+		imagePicker.dismiss(animated: true, completion: nil)
 	}
 	
 }
