@@ -11,7 +11,15 @@ import ImagePicker
 
 private let cellID = "imgCellID"
 
-class MainCollectionVC: UICollectionViewController, ImagePickerDelegate {
+class MainCollectionVC: UICollectionViewController, UICollectionViewDelegateFlowLayout, ImagePickerDelegate {
+	
+	var images = [UIImage]() {
+		didSet {
+			DispatchQueue.main.async {
+				self.collectionView?.reloadData()
+			}
+		}
+	}
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -21,8 +29,8 @@ class MainCollectionVC: UICollectionViewController, ImagePickerDelegate {
 	
 	fileprivate func setupViews() {
 		setupBar()
-		
-		collectionView?.register(UICollectionViewCell.self, forCellWithReuseIdentifier: cellID)
+		collectionView?.backgroundColor = .white
+		collectionView?.register(ImgCell.self, forCellWithReuseIdentifier: cellID)
 	}
 	
 	fileprivate func setupBar() {
@@ -37,6 +45,33 @@ class MainCollectionVC: UICollectionViewController, ImagePickerDelegate {
 		imagePickerController.delegate = self
 		present(imagePickerController, animated: true, completion: nil)
 
+	}
+	
+	// MARK: - UICollectionView
+	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+		return images.count
+	}
+	
+	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! ImgCell
+		
+		cell.img = images[indexPath.row]
+
+		return cell
+	}
+	
+	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+		let cWidth = (view.frame.width / 3) - 1
+		
+		return CGSize(width: cWidth, height: cWidth)
+	}
+	
+	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+		return 1
+	}
+	
+	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+		return 1
 	}
 	
 	// MARK: - ImagePickerDelegate Methods
@@ -58,6 +93,8 @@ class MainCollectionVC: UICollectionViewController, ImagePickerDelegate {
 		let alert = UIAlertController(title: "선택하신 \(images.count)장의 사진을 정사각형으로 변환하시겠습니까?", message: nil, preferredStyle: .alert)
 		
 		let makeAction = UIAlertAction(title: "Sure", style: .destructive) { (_) in
+			
+			self.images = []
 			for img in images {
 				self.saveSquaredPhoto(img)
 			}
@@ -104,6 +141,7 @@ class MainCollectionVC: UICollectionViewController, ImagePickerDelegate {
 			ac.addAction(UIAlertAction(title: "OK", style: .default))
 			present(ac, animated: true)
 		}
+		self.images.append(image)
 	}
 	
 }

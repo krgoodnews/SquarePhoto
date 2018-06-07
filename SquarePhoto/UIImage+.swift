@@ -9,73 +9,40 @@
 import UIKit
 
 extension UIImage {
-	func resizeImage(_ dimension: CGFloat, opaque: Bool, contentMode: UIViewContentMode = .scaleAspectFit) -> UIImage {
-		var width: CGFloat
-		var height: CGFloat
-		var newImage: UIImage
-		
-		let size = self.size
-		let aspectRatio =  size.width/size.height
-		
-		switch contentMode {
-		case .scaleAspectFit:
-			if aspectRatio > 1 {                            // Landscape image
-				width = dimension
-				height = dimension / aspectRatio
-			} else {                                        // Portrait image
-				height = dimension
-				width = dimension * aspectRatio
-			}
-			
-		default:
-			fatalError("UIIMage.resizeToFit(): FATAL: Unimplemented ContentMode")
-		}
-		
-		if #available(iOS 10.0, *) {
-			let renderFormat = UIGraphicsImageRendererFormat.default()
-			renderFormat.opaque = opaque
-			let renderer = UIGraphicsImageRenderer(size: CGSize(width: width, height: height), format: renderFormat)
-			newImage = renderer.image {
-				(context) in
-				self.draw(in: CGRect(x: 0, y: 0, width: width, height: height))
-			}
-		} else {
-			UIGraphicsBeginImageContextWithOptions(CGSize(width: width, height: height), opaque, 0)
-			self.draw(in: CGRect(x: 0, y: 0, width: width, height: height))
-			newImage = UIGraphicsGetImageFromCurrentImageContext()!
-			UIGraphicsEndImageContext()
-		}
-		
-		return newImage
-	}
+	
 	
 	func squareImage(isOpaque: Bool = false) -> UIImage {
 		var newImage: UIImage
+		let maxSize:CGFloat = 1080 / UIScreen.main.scale
 		
 		let size = self.size
-		var newWidth = size.width
-		var newHeight = size.height
 		
-		let aspectRatio =  newWidth / newHeight
+		let aspectRatio =  size.width / size.height
 		
+		let widthRatio = (maxSize < size.width) ? (maxSize / size.width) : 1
+		let heightRatio = (maxSize < size.height) ? (maxSize / size.height) : 1
+
 		
-		
-		if aspectRatio > 1 {                            // Landscape image
-			newHeight = newWidth
-		} else {                                        // Portrait image
-			newWidth = newHeight
+		var newSize: CGSize
+		if aspectRatio > 1 {                            // Landscape image (width > height)
+//			newHeight = newWidth
+			newSize = CGSize(width: size.width * widthRatio, height: size.height * widthRatio)
+		} else {                                        // Portrait image (height >= width)
+//			newWidth = newHeight
+			
+			newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
 		}
 	
+		let sideLength = max(newSize.width, newSize.height) // 한 변의 길이
+		let squareSize = CGSize(width: sideLength, height: sideLength)
+		UIGraphicsBeginImageContextWithOptions(squareSize, isOpaque, 0)
 		
-		UIGraphicsBeginImageContextWithOptions(CGSize(width: newWidth, height: newHeight), isOpaque, 0)
 		
-		
-
-		let newImgRect = CGRect(x: (newWidth - size.width) / 2, y: (newHeight - size.height) / 2, width: size.width, height: size.height)
+		let newImgRect = CGRect(x: (squareSize.width - newSize.width) / 2, y: (squareSize.height - newSize.height) / 2, width: newSize.width, height: newSize.height)
 		
 		// draw background
 		UIColor.black.setFill()
-		UIRectFill(CGRect(x: 0, y: 0, width: newWidth, height: newHeight))
+		UIRectFill(CGRect(x: 0, y: 0, width: squareSize.width, height: squareSize.height))
 		
 		// draw image
 		self.draw(in: newImgRect)
