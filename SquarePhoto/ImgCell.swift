@@ -19,19 +19,18 @@ class ImgCell: UICollectionViewCell {
 	let imgView: UIImageView = {
 		let iv = UIImageView(frame: .zero)
 		iv.translatesAutoresizingMaskIntoConstraints = false
-		iv.contentMode = .scaleAspectFit
+		iv.contentMode = .scaleAspectFill
 		return iv
 	}()
 	
 	fileprivate func setupView() {
-		backgroundColor = .blue
-		
 		addSubview(imgView)
 		
-		imgView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-		imgView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
-		imgView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
-		imgView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+
+		addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[v0]-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": imgView]))
+		addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[v0]-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": imgView]))
+
+
 	}
 	
 	override init(frame: CGRect) {

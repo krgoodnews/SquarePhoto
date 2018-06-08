@@ -10,6 +10,8 @@ import UIKit
 import ImagePicker
 
 private let cellID = "imgCellID"
+private let headerID = "headerID"
+
 
 class MainCollectionVC: UICollectionViewController, UICollectionViewDelegateFlowLayout, ImagePickerDelegate {
 	
@@ -17,6 +19,7 @@ class MainCollectionVC: UICollectionViewController, UICollectionViewDelegateFlow
 		didSet {
 			DispatchQueue.main.async {
 				self.collectionView?.reloadData()
+				self.setupBarButtonItems()
 			}
 		}
 	}
@@ -29,15 +32,37 @@ class MainCollectionVC: UICollectionViewController, UICollectionViewDelegateFlow
 	
 	fileprivate func setupViews() {
 		setupBar()
+		
+		
 		collectionView?.backgroundColor = .white
+		collectionView?.register(TitleHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerID)
 		collectionView?.register(ImgCell.self, forCellWithReuseIdentifier: cellID)
 	}
 	
 	fileprivate func setupBar() {
-		let selectPhotoButton = UIBarButtonItem(title: "Select Photo", style: .plain, target: self, action: #selector(didTapSelectPhoto))
-		self.navigationItem.rightBarButtonItem = selectPhotoButton
+		self.title = "Square Photo"
+
+		self.navigationController?.navigationBar.prefersLargeTitles = true
+		self.navigationItem.largeTitleDisplayMode = .always
+		
+		setupBarButtonItems()
 	}
 	
+	
+	fileprivate func setupBarButtonItems() {
+		var items: [UIBarButtonItem] = []
+		
+		let selectPhotoButton = UIBarButtonItem(barButtonSystemItem: .camera, target: self, action: #selector(didTapSelectPhoto))
+		let saveButton = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(didTapSave))
+		
+		items.append(selectPhotoButton)
+		
+		if !(self.images.isEmpty) {
+			items.append(saveButton)
+		}
+		
+		self.navigationItem.rightBarButtonItems = [selectPhotoButton]
+	}
 	@objc private func didTapSelectPhoto() {
 		// present imagePickerVC
 		
@@ -47,6 +72,9 @@ class MainCollectionVC: UICollectionViewController, UICollectionViewDelegateFlow
 
 	}
 	
+	@objc private func didTapSave() {
+		
+	}
 	// MARK: - UICollectionView
 	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 		return images.count
@@ -74,6 +102,25 @@ class MainCollectionVC: UICollectionViewController, UICollectionViewDelegateFlow
 		return 1
 	}
 	
+	// MARK: Header
+	override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+		switch kind {
+		case UICollectionElementKindSectionHeader:
+			let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerID, for: indexPath) as! TitleHeader
+			header.titleLabel.text = "사진을 선택해주세요."
+			return header
+		default:
+			let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerID, for: indexPath) as! TitleHeader
+			return header
+			
+		}
+	}
+
+	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+		let width = view.frame.width
+		let height: CGFloat = self.images.isEmpty ? 200 : 0
+		return CGSize(width: width, height: height)
+	}
 	// MARK: - ImagePickerDelegate Methods
 	
 	func wrapperDidPress(_ imagePicker: ImagePickerController, images: [UIImage]) {
@@ -123,7 +170,7 @@ class MainCollectionVC: UICollectionViewController, UICollectionViewDelegateFlow
 		img = img.squareImage()
 		print("squareSize:", img.size)
 		
-		//		DispatchQueue.main.async {
+		
 		DispatchQueue.global(qos: .background).async {
 			UIImageWriteToSavedPhotosAlbum(img, self, #selector(self.image(_:didFinishSavingWithError:contextInfo:)), nil)
 		}

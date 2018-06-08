@@ -16,6 +16,7 @@
 		EF4A5D6120C6272E00DBB22A /* ImagePicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF4A5D6020C6272E00DBB22A /* ImagePicker.framework */; };
 		EF4A5D6320C91E6A00DBB22A /* MainCollectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4A5D6220C91E6A00DBB22A /* MainCollectionVC.swift */; };
 		EF4A5D6520C9305C00DBB22A /* ImgCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4A5D6420C9305C00DBB22A /* ImgCell.swift */; };
+		EF4A5D6720C96DB700DBB22A /* TitleHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4A5D6620C96DB700DBB22A /* TitleHeader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		EF4A5D6020C6272E00DBB22A /* ImagePicker.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImagePicker.framework; path = Carthage/Build/iOS/ImagePicker.framework; sourceTree = "<group>"; };
 		EF4A5D6220C91E6A00DBB22A /* MainCollectionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCollectionVC.swift; sourceTree = "<group>"; };
 		EF4A5D6420C9305C00DBB22A /* ImgCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImgCell.swift; sourceTree = "<group>"; };
+		EF4A5D6620C96DB700DBB22A /* TitleHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleHeader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +70,7 @@
 				EF4A5D4C20C5A05400DBB22A /* ViewController.swift */,
 				EF4A5D5C20C5A2BE00DBB22A /* UIImage+.swift */,
 				EF4A5D6220C91E6A00DBB22A /* MainCollectionVC.swift */,
+				EF4A5D6620C96DB700DBB22A /* TitleHeader.swift */,
 				EF4A5D6420C9305C00DBB22A /* ImgCell.swift */,
 				EF4A5D4E20C5A05400DBB22A /* Main.storyboard */,
 				EF4A5D5120C5A05500DBB22A /* Assets.xcassets */,
@@ -175,6 +178,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EF4A5D6520C9305C00DBB22A /* ImgCell.swift in Sources */,
+				EF4A5D6720C96DB700DBB22A /* TitleHeader.swift in Sources */,
 				EF4A5D5D20C5A2BE00DBB22A /* UIImage+.swift in Sources */,
 				EF4A5D4D20C5A05400DBB22A /* ViewController.swift in Sources */,
 				EF4A5D4B20C5A05300DBB22A /* AppDelegate.swift in Sources */,
